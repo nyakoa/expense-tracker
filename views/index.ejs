@@ -1,0 +1,142 @@
+<%- include("partials/header.ejs") %>
+</main>
+<section class="dashboard">
+  
+<div class="summary">
+  <div class="stats">
+    <div class="stat-card">
+      <h6>Income</h6>
+      <h2 id="income" >Ksh <%= totalIncome %></h2>
+     
+    </div>
+
+    <div class="stat-card">
+      <h6>Expenses</h6>
+      <h2 id="expenses" >Ksh <%= totalExpenses %></h2>
+      
+    </div>
+    
+
+    <div class="stat-card">
+      <h6>Balance</h6>
+      <h2 id="balance" class="balance">Ksh <%= totalBalance %></h2>
+     
+    </div>
+  </div>
+  <div>
+  <canvas id="piechart"></canvas>
+  </div>
+  </div>
+  <div class="transaction-wrapper">
+  <div class="transaction-card">
+    <h2>New Transaction</h2>
+    <p>Log your income or expense and keep your finances in check.</p>
+
+    <form id="new-transaction" action="/new" method="POST">
+      <label for="date">Date</label>
+      <input type="date" id="date" name="date" required />
+
+      <label for="category">Category</label>
+      <input
+        type="text"
+        id="category"
+        name="category"
+        placeholder="e.g. Food, Transport"
+        required
+      />
+
+      <label for="type">Type</label>
+      <select name="type" id="type">
+        <option value="income">Income</option>
+        <option value="expense">Expense</option>
+      </select>
+
+      <label for="amount">Amount (Ksh)</label>
+      <input
+        type="number"
+        id="amount"
+        name="amount"
+        placeholder="e.g. 2500"
+        required
+      />
+
+      <button type="submit" class="new-btn">
+        <i class="bi bi-plus-circle"></i> Add Transaction
+      </button>
+    </form>
+  </div>
+</div>
+
+</section>
+
+
+<section class="transactions">
+  <div class="transactions-card">
+    <div class="transactions-header">
+      <h4>Recent Transactions</h4>
+
+      
+    </div>
+
+    <div class="transactions-table">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Date</th>
+            <th>Category</th>
+            <th>Type</th>
+            <th class="right">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (let tx of transactions) { %>
+          <tr>
+            <td>
+              <form action="/delete" method="post">
+                <input
+                  type="checkbox"
+                  name="deleteItemId"
+                  value="<%= tx.id %>"
+                  onchange="this.form.submit()"
+                />
+              </form>
+            </td>
+            <td><%= tx.date.toISOString().slice(0, 10) %></td>
+            <td><%= tx.category %></td>
+            <td><span class="type-label"><%= tx.type %></span></td>
+            <td class="right">Ksh <%= tx.amount %></td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const income = <%- JSON.stringify(totalIncome) %>;
+  const expenses = <%- JSON.stringify(totalExpenses) %>;
+  const totalbalance = income - expenses;
+let myChart=document.getElementById("piechart").getContext('2d')
+
+const chart=new Chart(myChart,{
+  type:"doughnut",
+  data:{
+    labels:["balance","expenses","income"],
+    datasets:[{
+      data:[income,expenses,totalbalance],
+       backgroundColor: [
+            '#5dd485', 
+            '#943c37', 
+            '#0b57d0'  
+    ]
+    }]
+  },
+  options:{}
+})
+
+</script>
+<%- include("partials/footer") %>
+</body>
+</html>

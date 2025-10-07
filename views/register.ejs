@@ -1,0 +1,34 @@
+<%- include("partials/header.ejs") %>
+
+<div class="login-container">
+  <div class="login-card">
+    <h3>Create an Account</h3>
+
+    <form action="/register" method="POST">
+      <label for="username">Email or Username</label>
+      <input type="text" id="username" name="username" required />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required />
+
+      <button type="submit" class="submit-btn">Sign Up</button>
+    </form>
+
+    <div class="divider">or</div>
+
+    <a href="/auth/google" class="google-btn">
+      <img
+        src="https://img.icons8.com/color/16/000000/google-logo.png"
+        alt="Google"
+      />
+      Sign up / Log in with Google
+    </a>
+
+    <p class="login-link">
+      Already have an account?
+      <a href="/login">Log in</a>
+    </p>
+  </div>
+</div>
+
+<%- include("partials/footer.ejs") %>

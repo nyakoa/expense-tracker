@@ -1,0 +1,42 @@
+<%- include('partials/header.ejs') %>
+<div class="transaction-wrapper">
+  <div class="transaction-card">
+    <h2>New Transaction</h2>
+    <p>Log your income or expense and keep your finances in check.</p>
+
+    <form id="new-transaction" action="/new" method="POST">
+      <label for="date">Date</label>
+      <input type="date" id="date" name="date" required />
+
+      <label for="category">Category</label>
+      <input
+        type="text"
+        id="category"
+        name="category"
+        placeholder="e.g. Food, Transport"
+        required
+      />
+
+      <label for="type">Type</label>
+      <select name="type" id="type">
+        <option value="income">Income</option>
+        <option value="expense">Expense</option>
+      </select>
+
+      <label for="amount">Amount (Ksh)</label>
+      <input
+        type="number"
+        id="amount"
+        name="amount"
+        placeholder="e.g. 2500"
+        required
+      />
+
+      <button type="submit" class="new-btn">
+        <i class="bi bi-plus-circle"></i> Add Transaction
+      </button>
+    </form>
+  </div>
+</div>
+
+<%- include('partials/footer.ejs') %>

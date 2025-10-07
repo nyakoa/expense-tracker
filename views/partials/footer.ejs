@@ -1,0 +1,35 @@
+<div class="header">
+  <footer class="footer">
+    <span style="color: #6a1cbe;">© 2025 pennyWise</span>
+  
+</footer>
+
+</div>
+
+<script>
+  document.querySelectorAll(".type-label").forEach((span) => {
+    const type = span.textContent.trim().toLowerCase();
+    if (type === "income") {
+      span.classList.add("income");
+    } else if (type === "expense") {
+      span.classList.add("expense");
+    }
+  });
+  const balance=document.querySelector("#balance")
+  let balanceText = balance.textContent.trim();
+  const sum= document.querySelector(".sum")
+
+// Remove "Ksh" and any commas if present
+let numericBalance = parseFloat(balanceText.replace("Ksh", "").replace(",", "").trim());
+
+  if(numericBalance<=0){
+    
+    sum.removeAttribute("hidden")
+    sum.classList.add("text-danger", "fw-bold", "shake");
+  }
+
+
+</script>
+</body>
+</html>
+
